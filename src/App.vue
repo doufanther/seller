@@ -22,4 +22,6 @@
 <style>
 	#app .tab{display: flex;width:100%;height:40px;line-height:40px;}
 	#app .tab .tab-item{flex: 1;text-align: center;}
+	#app .tab .tab-item a{display:block;font-size: 14px;color: rag(77,85,93);}
+	#app .tab .tab-item a.active{color:rgb(240,20,20);}
 </style>
