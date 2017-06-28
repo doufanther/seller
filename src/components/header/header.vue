@@ -17,36 +17,73 @@
 					<span class="text">{{seller.supports[0].description}}</span>
 				</div>
 			</div>
-			<div v-if="seller.supports" class="support-count">
+			<div v-if="seller.supports" class="support-count" @click="showDetail">
 				<span class="count">{{seller.supports.length}}个</span>
-				<i>></i>
+				<i class="el-icon-arrow-right"></i>
 			</div>
 		</div>
-		<div class="bulletin-wrapper"></div>
+		<div class="bulletin-wrapper" @click="showDetail">
+			<span class="bulletin-title"></span>
+			<span class="bulletin-text">{{seller.bulletin}}</span>
+			<i class="el-icon-arrow-right"></i>
+		</div>
+		<div class="background">
+			<img :src="seller.avatar" alt="" width="100%" height="100%"/>
+		</div>
+		<div class="detail" v-show="detailShow">
+			<div class="detail-wrapper clearfix">
+				<div class="detail-main">
+					<h1 class="name">{{seller.name}}</h1>
+					<div class="star-wrapper">
+						<star :size="48" :score="seller.score"></star>
+					</div>
+				</div>
+			</div>
+			<div class="detail-close">
+				<i class="el-icon-close"></i>
+			</div>
+		</div>
 	</div>
 </template>
 <script>
+  import star from '../star/star'
+  
   export default{
+  	
   	props:{
   		seller:{
-  			type:Object,
+  			type:Object
+  		}
+  	},
+  	data(){
+  		return{
+  			detailShow:false
+  		};
+  	},
+  	methods:{
+  		showDetail(){
+  			this.detailShow=true;
   		}
   	},
   	created(){
   		this.classMap=['decrease','discount','guarantee','invoice','special'];
+  	},
+  	components:{
+  		star
   	}
   }
 </script>
 <style lang="scss" scoped type="text/css">
 	@import "../../common/sass/mixin";
 	.header{
+		position:relative;
 		color: #fff;
-		background: #999;
+		background:rgba(7,17,27,.5);
 		.content-wrapper {
 			padding: 24px 12px 18px 24px;
 			font-size:0;
 			position:relative;
-			.avatar{
+			.avatar {
 				display: inline-block;
 				vertical-align: top;
 				img{
@@ -125,6 +162,83 @@
 				i {
 					font-size: 10px;
 				}
+			}
+		}
+		.bulletin-wrapper{
+			position: relative;
+			height:28px;
+			line-height:28px;
+			background:rgba(7,17,27,.2) ;
+			padding: 0 22px 0 12px;
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			.bulletin-title{
+				display: inline-block;
+				vertical-align: top;
+				margin-top: 8px;
+				width:22px;
+				height: 12px;
+				@include bg-image('bulletin');
+				background-size: 22px 12px;
+				background-repeat: no-repeat;
+			}
+			.bulletin-text{
+				font-size: 10px;
+				vertical-align: top;
+				margin: 0 4px;
+			}
+			i{
+				position: absolute;
+				font-size: 13px;
+				right: 12px;
+				top:8px;
+			}
+		}
+		.background{
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			z-index: -1;
+			filter: blur(10px);
+		}
+		.detail{
+			position:fixed;
+			top: 0;
+			left: 0;
+			z-index: 100;
+			width: 100%;
+			height: 100%;
+			overflow: auto;
+			background: rgba(7,17,27,.8);
+			.detail-wrapper {
+				min-height: 100%;
+				width: 100%;
+				.detail-main {
+					margin-top:64px;
+					padding-bottom:64px;
+					.name {
+						line-height: 16px;
+						text-align: center;
+						font-size: 16px;
+						font-weight: 700;
+					}
+					.star-wrapper{
+						margin-top: 18px;
+						padding: 2px 0;
+						text-align: center;
+					}
+				}
+			}
+			.detail-close{
+				position: relative;
+				width: 32px;
+				height: 32px;
+				margin:-64px auto 0 auto;
+				clear: both;
+				font-size: 32px;
 			}
 		}
 	}
