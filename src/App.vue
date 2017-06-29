@@ -41,14 +41,22 @@
 	#app .tab .tab-item a.active{color:rgb(240,20,20);}
 </style>-->
 <style lang="scss" scoped type="text/css">
+	@import "./common/sass/mixin";
+
 	$fontSize:14px;
 	#app{
 	  .tab{
-	    display: flex;width:100%;height:40px;line-height:40px;border-bottom: 1px solid rgba(7,17,27,.1);
+	    display: flex;
+	    width:100%;
+	    height:40px;
+	    line-height:40px;
+	 		@include border-1px(rgba(7,17,27,.1));
 	    .tab-item{
 	    	flex: 1;text-align: center;
 	    	a{
-	    		display:block;font-size: $fontSize;color: rag(77,85,93);
+	    		display:block;
+	    		font-size: $fontSize;
+	    		color: rag(77,85,93);
 	    	}
 	    	a.active{color:rgb(240,20,20);}
 	    }
