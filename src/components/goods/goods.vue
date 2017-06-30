@@ -1,7 +1,6 @@
 <template>
 	<div class="goods">
 		<div class="menu-wrapper" ref='menuWrapper'>
-			<p>{{currentIndex}}</p>
 			<ul>
 				<li v-for="(item,index) in goods" class="menu-item" :class="{'current':currentIndex===index}" @click="selectMenu(index,$event)">
 					<span class="text">
@@ -56,7 +55,6 @@
 			}
 		},
 		created(){
-			this.classMap=['decrease','discount','guarantee','invoice','special'];
 			this.$http.get('/api/goods').then((response)=>{
 				response=response.body;
 				if(response.errno===ERR_OK){
@@ -68,16 +66,13 @@
 					});
 				}	
 			});
+			this.classMap=['decrease','discount','guarantee','invoice','special'];
 		},
 		computed:{
 			currentIndex(){
-				//console.log(this.listHeight);
 				for(let i=0;i<this.listHeight.length;i++){
-					//console.log(i);
 					let height1=this.listHeight[i];
-					//console.log(height1);
 					let height2=this.listHeight[i+1];
-					//console.log(height2);
 					if(!height2 || (this.scrollY>=height1 && this.scrollY<height2)){
 						//console.log(i);
 						return i;
@@ -101,10 +96,10 @@
 				});
 				this.foodsScroll=new BScroll(this.$refs.foodsWrapper,{
 					click:true,
-					probeType:3
+					probeType: 3
 				});
-				this.foodsScroll.on('scroll',function(pos){
-					this.scrollY=Math.abs(Math.round(pos.y));
+				this.foodsScroll.on('scroll', (pos)=>{
+					this.scrollY = Math.abs(Math.round(pos.y));
 				})
 			},
 			_calculateHeight(){
