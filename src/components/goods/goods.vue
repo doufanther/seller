@@ -40,6 +40,7 @@
 
 <script>
 	import BScroll from "better-scroll"
+	import axios from 'axios'
 	const ERR_OK=0;
 	export default{
 		props:{
@@ -55,17 +56,27 @@
 			}
 		},
 		created(){
-			this.$http.get('/api/goods').then((response)=>{
-				response=response.body;
-				if(response.errno===ERR_OK){
-					this.goods=response.data;
-					//console.log(this.goods);
+//			this.$http.get('/api/goods').then((response)=>{
+//				response=response.body;
+//				if(response.errno===ERR_OK){
+//					this.goods=response.data;
+//					//console.log(this.goods);
+//					this.$nextTick(()=>{
+//						this._initScroll();
+//						this._calculateHeight();
+//					});
+//				}	
+//			});
+			axios.get('/api/goods').then((res)=>{
+				res=res.data;
+				if(res.errno===ERR_OK){
+					this.goods=res.data;
 					this.$nextTick(()=>{
 						this._initScroll();
 						this._calculateHeight();
-					});
-				}	
-			});
+					})
+				}
+			})
 			this.classMap=['decrease','discount','guarantee','invoice','special'];
 		},
 		computed:{
